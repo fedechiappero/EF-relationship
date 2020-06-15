@@ -1,6 +1,6 @@
 using System;
 
-namespace testDotnet
+namespace testDotnet.Models
 {
     public class WeatherForecast
     {
