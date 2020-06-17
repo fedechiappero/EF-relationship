@@ -22,10 +22,20 @@ namespace testDotnet.Controllers
 
         // GET: api/Post
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Post>>> GetPosts()
+        public async Task<ActionResult<IEnumerable<PostFull>>> GetPosts()
         {
-            return await _context.Posts
-                .Include(post => post.Blog)
+            return await _context
+                .PostsFull
+                .FromSqlRaw(""+
+                    "SELECT " +
+                    "p.PostId, " +
+                    "p.Title, " +
+                    "p.Content, " +
+                    "b.BlogId, " +
+                    "b.Url AS BlogUrl " +
+                    "FROM Posts p INNER JOIN Blogs b ON " +
+                    "p.BlogId = b.BlogId"
+                )
                 .ToListAsync();
         }
 
@@ -79,11 +89,8 @@ namespace testDotnet.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Post>> PostPost(Post post, int BlogId)
+        public async Task<ActionResult<Post>> PostPost(Post post)
         {
-            var blog = _context.Blogs.First(); //b => b.BlogId == BlogId
-
-            post.Blog = blog;
             _context.Posts.Add(post);
             await _context.SaveChangesAsync();
 

@@ -8,7 +8,7 @@ public class Post
     public string Content { get; set; }
 
     // relationship config
-    //public int BlogId { get; set; } // foreign key
-    [JsonIgnore]
-    public Blog Blog { get; set; } // navigation property
+    public int BlogId { get; set; } // foreign key
+    //[JsonIgnore]
+    //public Blog Blog { get; set; } // navigation property
 }
