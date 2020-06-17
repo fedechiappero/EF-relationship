@@ -10,8 +10,6 @@ namespace testDotnet.Models
         {
         }
 
-        public DbSet<WeatherForecast> WeatherForecasts { get; set; }
-
         // one-to-many
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
@@ -19,6 +17,10 @@ namespace testDotnet.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Blog>()
+                .HasMany(b => b.Posts)
+                .WithOne(p => p.Blog);
+
             modelBuilder.Entity<Post>()
                 .HasOne(p => p.Blog)
                 .WithMany(b => b.Posts);

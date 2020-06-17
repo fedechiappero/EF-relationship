@@ -1,4 +1,5 @@
 using testDotnet.Models;
+using System.Text.Json.Serialization;
 
 public class Post
 {
@@ -7,6 +8,7 @@ public class Post
     public string Content { get; set; }
 
     // relationship config
-    public int BlogId { get; set; } // foreign key
+    //public int BlogId { get; set; } // foreign key
+    [JsonIgnore]
     public Blog Blog { get; set; } // navigation property
 }
